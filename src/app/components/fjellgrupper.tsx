@@ -1,5 +1,7 @@
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import fjellImage from "../../imports/image-36.png";
+import fjellImage640 from "../../imports/image-36-640.webp";
+import fjellImage1200 from "../../imports/image-36-1200.webp";
+import fjellImage1600 from "../../imports/image-36-1600.webp";
 
 type Level = {
   name: string;
@@ -121,9 +123,13 @@ export function Fjellgrupper() {
 
       <div className="max-w-2xl mt-8">
         <ImageWithFallback
-          src={fjellImage}
+          src={fjellImage1600}
+          srcSet={`${fjellImage640} 640w, ${fjellImage1200} 1200w, ${fjellImage1600} 1600w`}
+          sizes="(min-width: 672px) 672px, 100vw"
           alt="Fjellgrupper"
           className="w-full h-auto"
+          loading="lazy"
+          decoding="async"
         />
       </div>
     </div>
