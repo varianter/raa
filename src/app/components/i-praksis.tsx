@@ -2,15 +2,21 @@ import { useState } from "react";
 import { Fagledere } from "./fagledere";
 import { Fjellgrupper } from "./fjellgrupper";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import refillImage from "../../imports/image-35.png";
+import refillImage640 from "../../imports/image-35-640.webp";
+import refillImage1200 from "../../imports/image-35-1200.webp";
+import refillImage1600 from "../../imports/image-35-1600.webp";
 
 function RefillImage() {
   return (
     <div className="max-w-2xl mt-8">
       <ImageWithFallback
-        src={refillImage}
+        src={refillImage1600}
+        srcSet={`${refillImage640} 640w, ${refillImage1200} 1200w, ${refillImage1600} 1600w`}
+        sizes="(min-width: 672px) 672px, 100vw"
         alt="Refill"
         className="w-full h-auto"
+        loading="lazy"
+        decoding="async"
       />
     </div>
   );
