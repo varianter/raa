@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Link, useParams } from "react-router";
 import { Fagledere } from "./fagledere";
 import { Fjellgrupper } from "./fjellgrupper";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
@@ -77,8 +77,8 @@ const structures: Structure[] = [
 ];
 
 export function IPraksis() {
-  const [active, setActive] = useState(structures[0].key);
-  const current = structures.find((s) => s.key === active) ?? structures[0];
+  const { arena } = useParams();
+  const current = structures.find((s) => s.key === arena) ?? structures[0];
 
   return (
     <div className="space-y-8">
@@ -126,11 +126,12 @@ export function IPraksis() {
 
         <div className="flex flex-wrap gap-2">
           {structures.map((s) => {
-            const isActive = s.key === active;
+            const isActive = s.key === current.key;
             return (
-              <button
+              <Link
                 key={s.key}
-                onClick={() => setActive(s.key)}
+                to={`/i-praksis/${s.key}`}
+                aria-current={isActive ? "page" : undefined}
                 className="px-4 py-2 text-[15px] rounded-full border transition-colors"
                 style={{
                   backgroundColor: isActive ? s.accent : "transparent",
@@ -139,7 +140,7 @@ export function IPraksis() {
                 }}
               >
                 {s.title}
-              </button>
+              </Link>
             );
           })}
         </div>

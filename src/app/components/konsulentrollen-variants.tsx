@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { Link, useParams } from "react-router";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { slugify } from "../lib/slug";
 import image26 from "../../imports/image-26.png";
 
 type Level = {
@@ -126,7 +127,11 @@ const allLevels: Level[] = [
 ];
 
 function FjellnivåerTabs() {
-  const [active, setActive] = useState(0);
+  const { level: levelSlug } = useParams();
+  const active = Math.max(
+    0,
+    allLevels.findIndex((l) => slugify(l.name) === levelSlug),
+  );
   const current = allLevels[active];
 
   return (
@@ -135,9 +140,10 @@ function FjellnivåerTabs() {
         {allLevels.map((level, i) => {
           const isActive = i === active;
           return (
-            <button
+            <Link
               key={level.name}
-              onClick={() => setActive(i)}
+              to={`/konsulentrollen/${slugify(level.name)}`}
+              aria-current={isActive ? "page" : undefined}
               className="px-4 py-2 text-[15px] rounded-full border transition-colors text-left"
               style={{
                 backgroundColor: isActive ? level.accent : "transparent",
@@ -152,7 +158,7 @@ function FjellnivåerTabs() {
               >
                 · {level.years}
               </span>
-            </button>
+            </Link>
           );
         })}
       </div>

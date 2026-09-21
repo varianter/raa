@@ -1,4 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Link } from "react-router";
+import { slugify } from "../lib/slug";
 
 type Phase = {
   name: string;
@@ -234,9 +236,18 @@ export function PhaseFlowCircles({ discipline }: { discipline: Discipline }) {
 }
 
 // Variant: Faner — velg nivå, vis innhold under
-export function PhaseFlowTabs({ discipline }: { discipline: Discipline }) {
+export function PhaseFlowTabs({
+  discipline,
+  basePath,
+  activeSlug,
+}: {
+  discipline: Discipline;
+  basePath?: string;
+  activeSlug?: string;
+}) {
   const phases = discipline.phases;
-  const [active, setActive] = useState(0);
+  const foundIndex = phases.findIndex((p) => slugify(p.name) === activeSlug);
+  const active = foundIndex === -1 ? 0 : foundIndex;
   const current = phases[active];
   return (
     <div>
@@ -249,9 +260,10 @@ export function PhaseFlowTabs({ discipline }: { discipline: Discipline }) {
         {phases.map((phase, i) => {
           const isActive = i === active;
           return (
-            <button
+            <Link
               key={phase.name}
-              onClick={() => setActive(i)}
+              to={basePath ? `${basePath}/${slugify(phase.name)}` : "#"}
+              aria-current={isActive ? "page" : undefined}
               className="px-4 py-2 text-[15px] rounded-full border transition-colors text-left"
               style={{
                 backgroundColor: isActive ? discipline.accent : "transparent",
@@ -270,7 +282,7 @@ export function PhaseFlowTabs({ discipline }: { discipline: Discipline }) {
                   · {phase.years}
                 </span>
               )}
-            </button>
+            </Link>
           );
         })}
       </div>
