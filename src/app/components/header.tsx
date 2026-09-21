@@ -1,16 +1,13 @@
+import { NavLink } from "react-router";
+
 const navItems = [
-  { label: "Oversikt" },
-  { label: "Konsulentrollen" },
-  { label: "Faglig utvikling" },
-  { label: "I praksis" },
+  { to: "/", label: "Oversikt", end: true },
+  { to: "/konsulentrollen", label: "Konsulentrollen", end: false },
+  { to: "/faglig", label: "Faglig utvikling", end: false },
+  { to: "/i-praksis", label: "I praksis", end: false },
 ];
 
-type HeaderProps = {
-  activePage: string;
-  onPageChange: (page: string) => void;
-};
-
-export function Header({ activePage, onPageChange }: HeaderProps) {
+export function Header() {
   return (
     <header>
       <svg width="91" height="68" viewBox="0 0 91 68" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -27,17 +24,20 @@ export function Header({ activePage, onPageChange }: HeaderProps) {
       </svg>
       <nav className="mt-8 flex flex-wrap gap-x-6 gap-y-0 border-b border-black/10">
         {navItems.map((item) => (
-          <button
-            key={item.label}
-            onClick={() => onPageChange(item.label)}
-            className={`pb-3 text-sm font-semibold transition-colors ${
-              activePage === item.label
-                ? "border-b-2 border-[#333333] text-[#333333]"
-                : "text-[#333333]/60 hover:text-[#333333]"
-            }`}
+          <NavLink
+            key={item.to}
+            to={item.to}
+            end={item.end}
+            className={({ isActive }) =>
+              `pb-3 text-sm font-semibold transition-colors ${
+                isActive
+                  ? "border-b-2 border-[#333333] text-[#333333]"
+                  : "text-[#333333]/60 hover:text-[#333333]"
+              }`
+            }
           >
             {item.label}
-          </button>
+          </NavLink>
         ))}
       </nav>
     </header>

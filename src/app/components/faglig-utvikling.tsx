@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link, useParams } from "react-router";
 import { PhaseFlowTabs } from "./phase-flow-variants";
 
 type Phase = {
@@ -218,8 +219,8 @@ const disciplines: Discipline[] = [
 
 
 export function FagligUtvikling() {
-  const [active, setActive] = useState(disciplines[0].key);
-  const current = disciplines.find((d) => d.key === active) ?? disciplines[0];
+  const { fag, fase } = useParams();
+  const current = disciplines.find((d) => d.key === fag) ?? disciplines[0];
 
   return (
     <div className="space-y-12">
@@ -250,11 +251,12 @@ export function FagligUtvikling() {
 
         <div className="flex flex-wrap gap-2">
           {disciplines.map((d) => {
-            const isActive = d.key === active;
+            const isActive = d.key === current.key;
             return (
-              <button
+              <Link
                 key={d.key}
-                onClick={() => setActive(d.key)}
+                to={`/faglig/${d.key}`}
+                aria-current={isActive ? "page" : undefined}
                 className="px-4 py-2 text-[15px] rounded-full border transition-colors"
                 style={{
                   backgroundColor: isActive ? d.accent : "transparent",
@@ -263,7 +265,7 @@ export function FagligUtvikling() {
                 }}
               >
                 {d.title}
-              </button>
+              </Link>
             );
           })}
         </div>
@@ -300,7 +302,7 @@ export function FagligUtvikling() {
               description="Du tilhører ett av disse nivåene. Velg fanen som passer din erfaring for å se hva som forventes og hva du kan strekke deg etter."
               accent={current.accent}
             />
-            <PhaseFlowTabs discipline={current} />
+            <PhaseFlowTabs discipline={current} basePath={`/faglig/${current.key}`} activeSlug={fase} />
           </section>
 
           <section>
@@ -335,7 +337,7 @@ export function FagligUtvikling() {
               description="Du tilhører ett av disse nivåene. Velg fanen som passer din erfaring for å se hva som forventes og hva du kan strekke deg etter."
               accent={current.accent}
             />
-            <PhaseFlowTabs discipline={current} />
+            <PhaseFlowTabs discipline={current} basePath={`/faglig/${current.key}`} activeSlug={fase} />
           </section>
         </>
       )}
@@ -360,7 +362,7 @@ export function FagligUtvikling() {
               description="Du tilhører ett av disse nivåene. Velg fanen som passer din erfaring for å se hva som forventes og hva du kan strekke deg etter."
               accent={current.accent}
             />
-            <PhaseFlowTabs discipline={current} />
+            <PhaseFlowTabs discipline={current} basePath={`/faglig/${current.key}`} activeSlug={fase} />
           </section>
         </>
       )}

@@ -26,6 +26,10 @@ jobs:
           cache: pnpm
       - run: pnpm install
       - run: pnpm build
+      # GitHub Pages has no server-side rewrites: a direct hit on a client
+      # route 404s. Serving the SPA shell as the 404 page lets react-router
+      # render the deep link client-side once it loads.
+      - run: cp dist/index.html dist/404.html
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
