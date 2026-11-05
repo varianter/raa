@@ -35,7 +35,18 @@ export default function App() {
             <Route path="*" element={<Oversikt />} />
           </Routes>
         </main>
-        <footer className="mt-32 text-sm text-[#333333]/60 text-right">
+        <footer className="mt-32 pt-6 border-t border-black/10 text-sm text-[#333333]/70 flex flex-col gap-2 md:flex-row md:justify-between">
+          <p className="max-w-xl">
+            RÅ er Variants åpne rammeverk for faglig utvikling og
+            konsulentrollen. Les mer om oss på{" "}
+            <a
+              href="https://variant.no"
+              className="underline underline-offset-2 hover:text-[#333333]"
+            >
+              variant.no
+            </a>
+            .
+          </p>
           <span>© {new Date().getFullYear()} Variant</span>
         </footer>
       </div>
