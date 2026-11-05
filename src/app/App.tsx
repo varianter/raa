@@ -37,8 +37,8 @@ export default function App() {
         </main>
         <footer className="mt-32 pt-6 border-t border-black/10 text-sm text-[#333333]/70 flex flex-col gap-2 md:flex-row md:justify-between">
           <p className="max-w-xl">
-            RÅ er Variants åpne rammeverk for faglig utvikling og
-            konsulentrollen. Les mer om oss på{" "}
+            RÅ eies av Variant og er åpent for alle. Rammeverket beskriver
+            faglig utvikling og konsulentrollen hos oss. Les mer om Variant på{" "}
             <a
               href="https://variant.no"
               className="underline underline-offset-2 hover:text-[#333333]"
